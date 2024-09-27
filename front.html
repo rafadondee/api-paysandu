@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="nome">
+    <input type="text" id="numero_camiseta">
+    <input type="text" id="posicao_em_campo">
+
+    <button onclick="criarPaysandu()">
+       Cadastrar   
+    </button>
+
+    <p id="paysandu"></p>
+    <script>
+
+        async function pegarPaysandu() {
+
+        const resposta = await fetch('http://localhost:3333/paysandu', {
+         method: 'GET'
+
+        
+        })
+
+        const Paysandu = await resposta.json();
+        console.log(Paysandu);
+        const paysandu = document.getElementById('paysandu')
+        paysandu.innerHTML = paysandu[0].nome
+
+
+        }
+        pegarPaysandu();
+
+
+        async function criarPaysandu() {
+
+            const nome = document.getElementById('nome').value
+            const numero_camiseta = document.getElementById('numero_camiseta').value
+            const posicao_em_campo = document.getElementById('posicao_em_campo').value
+
+          const paysandu = {
+
+            "nome": nome,
+            "numero_camiseta": numero_camiseta,
+            "posicao_em_campo": posicao_em_campo
+
+          } 
+          const resposta = await fetch('http://localhost:3333/paysandu', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+
+              },
+              body: JSON.stringify(paysandu)
+          });
+
+        }
+
+    </script>
+    
+</body>
+</html>
